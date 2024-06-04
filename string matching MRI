@@ -1,0 +1,93 @@
+
+
+I am implementing a string matching algorithm for a username database. My method takes an existing Username database and a new username that the person wants and it checks to see if the username is taken. if it is taken the method is supposed to return the username with a number that isn't taken in the database.
+
+Example:
+
+"Justin","Justin1", "Justin2", "Justin3"
+
+Enter "Justin"
+
+Returns "Justin4" since Justin and Justin with the numbers 1 through 3 are already taken.
+
+I have already written this code in Java, and now I am writing it in C++ for practice. I have a few problems though:
+
+    How do you compare two strings? I have tried strcmp and a few others but I always get the error message: cannot convert std::string to const char* for argument 2.
+
+    How do you concatenate an int and a string? In Java it was as simple as using the + operator.
+
+    In my main function, it says there is no matching function call for Username::NewMember(std::string, std::string). hy does it not recognize newMember in main?
+
+       #include<iostream>
+       #include<string>
+       using namespace std;
+
+       class Username {
+          public:
+
+
+
+     string newMember(string existingNames, string newName){
+
+     bool found = false;
+     bool match = false;
+     string otherName = NULL;
+
+     for(int i = 0; i < sizeof(existingNames);i++){
+         if(strcmp(existingNames[i], newName) == 0){
+             found = true;
+             break;
+         }
+
+     }
+     if(found){
+         for(int x = 1;  ; x++){
+             match = false;
+             for(int i = 0; i < sizeof(existingNames);i++){
+                  if(strcmp(existingNames[i],(newName + x)) == 0){
+                     match = true;
+                         break;
+                 }
+
+             }
+             if(!match){
+                 otherName = newName + x;
+                 break;
+             }
+
+         }
+
+         return otherName;
+
+     }
+
+
+
+
+
+     else return newName;
+
+
+
+
+     }
+
+     int main(){
+
+
+     string *userNames = new string[4];
+     userNames[0] = "Justin";
+     userNames[1] = "Justin1";
+     userNames[2] = "Justin2";
+     userNames[3] = "Justin3";
+
+     cout << newMember(userNames, "Justin") << endl;
+
+     delete[] userNames;
+
+     return 0;
+
+
+         }
+      }
+
